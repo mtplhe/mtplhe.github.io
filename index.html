@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoded Message Challenge</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            background-color: #16213e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .hints {
+            width: 30%;
+            padding: 20px;
+            background-color: #0f3460;
+        }
+        .hint {
+            margin-bottom: 15px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #1a1a2e;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .hint:hover {
+            background-color: #16213e;
+        }
+        .hint-content {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #16213e;
+            border-radius: 5px;
+        }
+        .challenge {
+            width: 70%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .encoded-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #c71585;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #1a1a2e;
+            border: 1px solid #0f3460;
+            color: #e0e0e0;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4b0082;
+            color: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #8a2be2;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="hints">
+            <div class="hint" onclick="toggleHint(1)">Hint 1</div>
+            <div class="hint-content" id="hint1">First hint content goes here.</div>
+            <div class="hint" onclick="toggleHint(2)">Hint 2</div>
+            <div class="hint-content" id="hint2">Second hint content goes here.</div>
+            <div class="hint" onclick="toggleHint(3)">Hint 3</div>
+            <div class="hint-content" id="hint3">Third hint content goes here.</div>
+        </div>
+        <div class="challenge">
+            <div class="encoded-message">LQFRGWCHZRUGBRIPHVVDJH</div>
+            <input type="text" id="answer" placeholder="Enter your answer">
+            <button onclick="checkAnswer()">Submit</button>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleHint(hintNumber) {
+            const hint = document.getElementById(`hint${hintNumber}`);
+            hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value.toLowerCase();
+            const hashedAnswer = sha256(answer);
+            const correctAnswerHash = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // This is the hash for 'password'
+            const resultElement = document.getElementById('result');
+
+            if (hashedAnswer === correctAnswerHash) {
+                resultElement.textContent = 'Correct! Well done!';
+                resultElement.style.color = '#00ff00';
+            } else {
+                resultElement.textContent = 'Incorrect. Try again!';
+                resultElement.style.color = '#ff0000';
+            }
+        }
+    </script>
+</body>
+</html>
