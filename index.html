@@ -46,8 +46,9 @@
             padding: 10px;
             background-color: #16213e;
             border-radius: 5px;
-            margin-bottom:10px
+            margin-bottom: 10px;
         }
+        .key-section,
         .challenge {
             width: 70%;
             padding: 20px;
@@ -86,6 +87,11 @@
             margin-top: 20px;
             font-weight: bold;
         }
+        #key-result {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 </head>
@@ -93,16 +99,23 @@
     <div class="container">
         <div class="hints">
             <div class="hint" onclick="toggleHint(1)">Hint 1</div>
-            <div class="hint-content" id="hint1">google Quad9</div>
+            <div class="hint-content" id="hint1">google Quad9 and its IPs.</div>
             <div class="hint" onclick="toggleHint(2)">Hint 2</div>
-            <div class="hint-content" id="hint2">Ceasar Ciphers are so simle for our time.</div>
+            <div class="hint-content" id="hint2">Caesar Ciphers are so simple for our time.</div>
             <div class="hint" onclick="toggleHint(3)">Hint 3</div>
-            <div class="hint-content" id="hint3">Think about +/-</div>
+            <div class="hint-content" id="hint3">Think about +-</div>
             <div class="hint" onclick="toggleHint(4)">Hint 4</div>
             <div class="hint-content" id="hint4">Contact me:)</div>
         </div>
-        <div class="challenge">
-            <div class="encoded-message">MESSAGE: ZBKZOLYNYNKJ</div>
+        <div class="key-section">
+            <div class="encoded-message">FROM DNS 9 -- V6(1)</div>
+            <input type="text" id="key" placeholder="Enter the key">
+            <button onclick="checkKey()">Submit Key</button>
+            <div id="key-result"></div>
+            <button id="next-button" onclick="showChallenge()" style="display: none;">Next</button>
+        </div>
+        <div class="challenge" id="challenge" style="display: none;">
+            <div class="encoded-message">CAESAR(+-6,ZBKZOLYNYNKJ)</div>
             <input type="text" id="answer" placeholder="Enter your answer">
             <button onclick="checkAnswer()">Submit</button>
             <div id="result"></div>
@@ -110,22 +123,46 @@
     </div>
 
     <script>
+        
+        
         function toggleHint(hintNumber) {
             const hint = document.getElementById(`hint${hintNumber}`);
             hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
         }
 
+        function checkKey() {
+            const key = document.getElementById('key').value.replace(/\s+/g, '').toLowerCase();
+            const hashedKey = sha256(key);
+            const keyResultElement = document.getElementById('key-result');
+            const nextButton = document.getElementById('next-button');
+            const correctKeyHash = 'e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683';
+
+            if (hashedKey === correctKeyHash) {
+                keyResultElement.textContent = 'Key is correct! Click "Next" to proceed to the challenge.';
+                keyResultElement.style.color = '#00ff00';
+                nextButton.style.display = 'block';
+            } else {
+                keyResultElement.textContent = 'Incorrect key. Try again.';
+                keyResultElement.style.color = '#ff0000';
+            }
+        }
+
+        function showChallenge() {
+            document.querySelector('.key-section').style.display = 'none';
+            document.getElementById('challenge').style.display = 'flex';
+        }
+
         function checkAnswer() {
             const answer = document.getElementById('answer').value.replace(/\s+/g, '').toLowerCase();
             const hashedAnswer = sha256(answer);
-            const correctAnswerHash = 'fee8bee7bb16df67604e03b95241e11fca98716e06ff5aece3b82ee90c73ceaf'; // This is the hash for 'password'
+            const correctAnswerHash = 'fee8bee7bb16df67604e03b95241e11fca98716e06ff5aece3b82ee90c73ceaf';
             const resultElement = document.getElementById('result');
 
             if (hashedAnswer === correctAnswerHash) {
                 resultElement.textContent = 'Correct! Hope You Enjoyed! Contact me to celebrate together:)';
                 resultElement.style.color = '#00ff00';
             } else {
-                resultElement.textContent = 'Incorrect. Try again!';
+                resultElement.textContent = 'Incorrect. Try again.';
                 resultElement.style.color = '#ff0000';
             }
         }
