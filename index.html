@@ -46,6 +46,7 @@
             padding: 10px;
             background-color: #16213e;
             border-radius: 5px;
+            margin-bottom:10px
         }
         .challenge {
             width: 70%;
@@ -101,7 +102,7 @@
             <div class="hint-content" id="hint4">Contact me:)</div>
         </div>
         <div class="challenge">
-            <div class="encoded-message">ZBKZOLYNYNKJ</div>
+            <div class="encoded-message">MESSAGE: ZBKZOLYNYNKJ</div>
             <input type="text" id="answer" placeholder="Enter your answer">
             <button onclick="checkAnswer()">Submit</button>
             <div id="result"></div>
@@ -121,7 +122,7 @@
             const resultElement = document.getElementById('result');
 
             if (hashedAnswer === correctAnswerHash) {
-                resultElement.textContent = 'Correct! Well done!';
+                resultElement.textContent = 'Correct! Hope You Enjoyed! Contact me to celebrate together:)';
                 resultElement.style.color = '#00ff00';
             } else {
                 resultElement.textContent = 'Incorrect. Try again!';
