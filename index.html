@@ -92,14 +92,16 @@
     <div class="container">
         <div class="hints">
             <div class="hint" onclick="toggleHint(1)">Hint 1</div>
-            <div class="hint-content" id="hint1">First hint content goes here.</div>
+            <div class="hint-content" id="hint1">google Quad9</div>
             <div class="hint" onclick="toggleHint(2)">Hint 2</div>
-            <div class="hint-content" id="hint2">Second hint content goes here.</div>
-            <div class="hint" onclick="toggleHint(3)">Hint 3</div>
-            <div class="hint-content" id="hint3">Third hint content goes here.</div>
+            <div class="hint-content" id="hint2">Ceasar Ciphers are so simle for our time.</div>
+            <div class="hint" onclick="toggleHint(1)">Hint 3</div>
+            <div class="hint-content" id="hint1">Think about +/-</div>
+            <div class="hint" onclick="toggleHint(3)">Hint 4</div>
+            <div class="hint-content" id="hint3">Contact me:)</div>
         </div>
         <div class="challenge">
-            <div class="encoded-message">LQFRGWCHZRUGBRIPHVVDJH</div>
+            <div class="encoded-message">ZBKZOLYNYNKJ</div>
             <input type="text" id="answer" placeholder="Enter your answer">
             <button onclick="checkAnswer()">Submit</button>
             <div id="result"></div>
@@ -113,9 +115,9 @@
         }
 
         function checkAnswer() {
-            const answer = document.getElementById('answer').value.toLowerCase();
+            const answer = document.getElementById('answer').value.replace(/\s+/g, '').toLowerCase();
             const hashedAnswer = sha256(answer);
-            const correctAnswerHash = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // This is the hash for 'password'
+            const correctAnswerHash = 'fee8bee7bb16df67604e03b95241e11fca98716e06ff5aece3b82ee90c73ceaf'; // This is the hash for 'password'
             const resultElement = document.getElementById('result');
 
             if (hashedAnswer === correctAnswerHash) {
